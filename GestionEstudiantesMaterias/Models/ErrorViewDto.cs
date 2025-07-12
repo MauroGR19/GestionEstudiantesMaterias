@@ -1,6 +1,6 @@
 namespace GestionEstudiantesMaterias.Models
 {
-    public class ErrorViewModel
+    public class ErrorViewDto
     {
         public string? RequestId { get; set; }
 

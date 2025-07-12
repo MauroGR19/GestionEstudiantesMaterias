@@ -1,0 +1,42 @@
+﻿@model SubjectDto
+@{
+    ViewData["Title"] = "vSubjectDet";
+}
+
+<div class="row">
+    <div class="col-1">
+        <a asp-action="vSubjectIni" asp-controller="Subject" class="btn btn-warning btn-sm">Go Back</a>
+    </div>
+</div>
+<br />
+<div class="row">
+
+    <div class="col-5">
+        <div class="card">
+            <div class="card-header">
+                @ViewBag.Accion
+            </div>
+            <div class="card-body">
+
+                <form asp-action="Savechanges" asp-controller="Subject" method="post">
+
+                    <input id="Code" type="hidden" asp-for="Code" />
+
+                    <div class="mb-2">
+                        <label class="form-label">Name</label>
+                        <input type="text" class="form-control form-control-sm" asp-for="Name" />
+                    </div>
+
+                    <div class="mb-2">
+                        <label class="form-label">Credits</label>
+                        <input type="text" class="form-control form-control-sm" asp-for="Credits" />
+                    </div>
+
+                    <button type="submit" class="btn btn-success btn-sm">Save Changes</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+
