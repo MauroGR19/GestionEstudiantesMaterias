@@ -3,26 +3,25 @@ using Data.Contex;
 using Data.Entity;
 using Domain.Interface.Repository;
 using Domain.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Data.Operation
 {
     public class SubjectOpe : IRepoBase<SubjectModel, int>
     {
+        #region Attributes
         private StudentSubjectContex db;
         private readonly IMapper _mapper;
+        #endregion
 
+        #region Constructors
         public SubjectOpe(StudentSubjectContex _db, IMapper mapper)
         {
             db = _db;
             _mapper = mapper;
         }
+        #endregion
 
+        #region Methods
         public bool Delete(int entityID)
         {
             var selecc = db.subject.Where(row => row.Code == entityID).FirstOrDefault();
@@ -73,7 +72,8 @@ namespace Data.Operation
             }
             else
                 return false;
-        }
+        } 
+        #endregion
 
     }
 }

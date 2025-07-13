@@ -1,28 +1,30 @@
 ﻿using Aplication.Interface;
 using AutoMapper;
-using Data.Entity;
-using Domain.Interface;
-using Domain.Interface.Repository;
 using Domain.Master;
 using Domain.Model;
 using GestionEstudiantesMaterias.Interface;
 using GestionEstudiantesMaterias.Models;
-using System;
 using static Domain.Master.BaseMessage;
 
 namespace GestionEstudiantesMaterias.Service
 {
     public class ClsStudentServ : IBaseService<StudentDto, string>
     {
+        #region Attributes
         private readonly IUseCaseBase<StudentModel, string> useCaseBase;
         private ExceptionConfig exception = new ExceptionConfig();
         private readonly IMapper _mapper;
+        #endregion
+
+        #region Constructors
         public ClsStudentServ(IUseCaseBase<StudentModel, string> _useCaseBase, IMapper mapper)
         {
             useCaseBase = _useCaseBase;
             _mapper = mapper;
         }
+        #endregion
 
+        #region Methods
         public bool Delete(string entityID)
         {
             try
@@ -32,7 +34,7 @@ namespace GestionEstudiantesMaterias.Service
             }
             catch (Exception ex)
             {
-                throw exception.Error(ex, ErrorStatus.Delete.GetEnumDescription());
+                throw new Exception(exception.Error(ex, ErrorStatus.Delete.GetEnumDescription()));
             }
         }
 
@@ -45,7 +47,7 @@ namespace GestionEstudiantesMaterias.Service
             }
             catch (Exception ex)
             {
-                throw exception.Error(ex, ErrorStatus.Retrieve.GetEnumDescription());
+                throw new Exception(exception.Error(ex, ErrorStatus.Retrieve.GetEnumDescription()));
             }
         }
 
@@ -58,7 +60,7 @@ namespace GestionEstudiantesMaterias.Service
             }
             catch (Exception ex)
             {
-                throw exception.Error(ex, ErrorStatus.Retrieve.GetEnumDescription());
+                throw new Exception(exception.Error(ex, ErrorStatus.Retrieve.GetEnumDescription()));
             }
         }
 
@@ -72,7 +74,7 @@ namespace GestionEstudiantesMaterias.Service
             catch (Exception ex)
             {
 
-                throw exception.Error(ex, ErrorStatus.Insert.GetEnumDescription());
+                throw new Exception(exception.Error(ex, ErrorStatus.Insert.GetEnumDescription()));
             }
         }
 
@@ -85,8 +87,9 @@ namespace GestionEstudiantesMaterias.Service
             }
             catch (Exception ex)
             {
-                throw exception.Error(ex, ErrorStatus.Update.GetEnumDescription());
+                throw new Exception(exception.Error(ex, ErrorStatus.Update.GetEnumDescription()));
             }
-        }
+        } 
+        #endregion
     }
 }

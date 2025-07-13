@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Data.Entity;
 using Domain.Model;
 using GestionEstudiantesMaterias.Models;
 

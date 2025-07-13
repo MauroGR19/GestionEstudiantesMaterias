@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 namespace Domain.Interface.Repository
 {
     public interface IEnrollmentRepo<TEntity, TEntityID>
-        : IInsert<TEntity>, IDelete<TEntityID>, IList<TEntity, TEntityID>, ISaveAll
+        : IInsert<TEntity>, IDelete<TEntityID>, ISaveAll
     {
+        TEntity GetByID(string Document, int Code);
+        List<TEntity> GetAll(string Document);
     }
 }

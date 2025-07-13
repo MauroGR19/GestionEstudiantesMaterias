@@ -2,25 +2,25 @@
 using Domain.Interface.Repository;
 using Domain.Master;
 using Domain.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using static Domain.Master.BaseMessage;
 
 namespace Aplication.UseCase
 {
     public class SubjectUseCase : IUseCaseBase<SubjectModel, int>
     {
+        #region Attributes
         private readonly IRepoBase<SubjectModel, int> repo;
         private ExceptionConfig exception = new ExceptionConfig();
+        #endregion
 
-        public SubjectUseCase(IRepoBase<SubjectModel  , int> _repo)
+        #region Constructors
+        public SubjectUseCase(IRepoBase<SubjectModel, int> _repo)
         {
             repo = _repo;
         }
+        #endregion
 
+        #region Methods
         public bool Delete(int entityID)
         {
             try
@@ -32,7 +32,7 @@ namespace Aplication.UseCase
             catch (Exception ex)
             {
 
-                throw exception.Error(ex, ErrorStatus.Delete.GetEnumDescription());
+                throw new Exception(exception.Error(ex, ErrorStatus.Delete.GetEnumDescription()));
             }
         }
 
@@ -45,7 +45,7 @@ namespace Aplication.UseCase
             catch (Exception ex)
             {
 
-                throw exception.Error(ex, ErrorStatus.Retrieve.GetEnumDescription());
+                throw new Exception(exception.Error(ex, ErrorStatus.Retrieve.GetEnumDescription()));
             }
         }
 
@@ -58,7 +58,7 @@ namespace Aplication.UseCase
             catch (Exception ex)
             {
 
-                throw exception.Error(ex, ErrorStatus.Retrieve.GetEnumDescription());
+                throw new Exception(exception.Error(ex, ErrorStatus.Retrieve.GetEnumDescription()));
             }
         }
 
@@ -72,7 +72,7 @@ namespace Aplication.UseCase
             }
             catch (Exception ex)
             {
-                throw exception.Error(ex, ErrorStatus.Insert.GetEnumDescription());
+                throw new Exception(exception.Error(ex, ErrorStatus.Insert.GetEnumDescription()));
             }
         }
 
@@ -82,12 +82,13 @@ namespace Aplication.UseCase
             {
                 var result = repo.Update(entity);
                 repo.SaveAll();
-                return result; 
+                return result;
             }
             catch (Exception ex)
             {
-                throw exception.Error(ex, ErrorStatus.Update.GetEnumDescription());
+                throw new Exception(exception.Error(ex, ErrorStatus.Update.GetEnumDescription()));
             }
-        }
+        } 
+        #endregion
     }
 }

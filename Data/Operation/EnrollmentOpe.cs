@@ -3,46 +3,46 @@ using Data.Contex;
 using Data.Entity;
 using Domain.Interface.Repository;
 using Domain.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Data.Operation
 {
     public class EnrollmentOpe : IEnrollmentRepo<EnrollmentModel, int>
     {
+        #region Attributes
         private StudentSubjectContex db;
         private readonly IMapper _mapper;
+        #endregion
 
+        #region Constructors
         public EnrollmentOpe(StudentSubjectContex _db, IMapper mapper)
         {
             db = _db;
             _mapper = mapper;
         }
+        #endregion
 
+        #region Methods
         public bool Delete(int entityID)
         {
-            var selecc = db.enrollment.Where(row => row.Code == entityID).FirstOrDefault();
+            var selecc = db.enrollment.Where(row => row.IdEnrollment == entityID).FirstOrDefault();
 
             if (selecc != null)
             {
                 db.enrollment.Remove(selecc);
                 return true;
             }
-            else 
+            else
                 return false;
         }
 
-        public List<EnrollmentModel> GetAll()
+        public List<EnrollmentModel> GetAll(string Document)
         {
-            return _mapper.Map<List<EnrollmentModel>>(db.enrollment.ToList());
+            return _mapper.Map<List<EnrollmentModel>>(db.enrollment.Where(row => (row.Document == Document)).ToList());
         }
 
-        public EnrollmentModel GetByID(int entityID)
+        public EnrollmentModel GetByID(string Document, int Code)
         {
-            var selecc = db.enrollment.Where(row => (row.Code == entityID)).FirstOrDefault();
+            var selecc = db.enrollment.Where(row => (row.Code == Code && row.Document == Document)).FirstOrDefault();
 
             return _mapper.Map<EnrollmentModel>(selecc);
         }
@@ -56,7 +56,8 @@ namespace Data.Operation
         public void SaveAll()
         {
             db.SaveChanges();
-        }
+        } 
+        #endregion
 
     }
 }
