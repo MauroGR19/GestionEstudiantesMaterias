@@ -6,13 +6,18 @@ namespace GestionEstudiantesMaterias.Controllers
 {
     public class SubjectController : Controller
     {
+        #region Attributes
         private readonly IBaseService<SubjectDto, int> db;
+        #endregion
 
+        #region Constructors
         public SubjectController(IBaseService<SubjectDto, int> _db)
         {
             db = _db;
         }
+        #endregion
 
+        #region Methods
         public IActionResult vSubjectIni()
         {
             List<SubjectDto> entity = db.GetAll();
@@ -40,32 +45,50 @@ namespace GestionEstudiantesMaterias.Controllers
         [HttpPost]
         public IActionResult SaveChanges(SubjectDto entity)
         {
-            bool response;
-            if (entity.Code == 0)
+            try
             {
-                response = db.Insert(entity);
+                bool response;
+                if (entity.Code == 0)
+                {
+                    response = db.Insert(entity);
+                }
+                else
+                {
+                    response = db.Update(entity);
+                }
+
+                if (response)
+                    return RedirectToAction("vSubjectIni");
+                else
+                    return NoContent();
             }
-            else
+            catch (Exception ex)
             {
-                response = db.Update(entity);
+                TempData["Error"] = ex.Message;
+                return RedirectToAction("vSubjetDet", "Subject", new { Code = entity.Code });
             }
 
-            if (response)
-                return RedirectToAction("vSubjectIni");
-            else
-                return NoContent();
         }
 
         [HttpGet]
         public IActionResult Delete(int Code)
         {
+            try
+            {
+                var response = db.Delete(Code);
 
-            var response = db.Delete(Code);
-
-            if (response)
+                if (response)
+                    return RedirectToAction("vSubjectIni");
+                else
+                    return NoContent();
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = ex.Message;
                 return RedirectToAction("vSubjectIni");
-            else
-                return NoContent();
-        }
+            }
+
+        } 
+        #endregion
     }
 }

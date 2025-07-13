@@ -6,9 +6,18 @@
 <link href=" ~/css/select2.min.css" rel="stylesheet" asp-append-version="true" />
 
 <div class="row">
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @Html.Raw(TempData["Error"])
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+    <br />
     <div class="col-1">
-        <a asp-action="vEnrollmentDet" asp-controller="Enrollment" asp-route-_IdEnrollment="@Model.IdEnrollment" class="btn btn-warning btn-sm">Go back</a>
+        <a asp-action="vStudentDet" asp-controller="Student" asp-route-Document="@Model.Document" asp-route-insert= 1 class="btn btn-warning btn-sm">Go back</a>
     </div>
+    
 </div>
 <br />
 <div class="row">
@@ -23,15 +32,16 @@
                 <form asp-action="SaveChanges" asp-controller="Enrollment" method="post">
 
                     <input type="hidden" asp-for="IdEnrollment" />
+                    <input type="hidden" asp-for="@Model.Document" />
 
                     <div class="mb-2">
                         <label class="form-label">Subject</label>
-                        @Html.DropDownListFor(m => m.Code, (IEnumerable<SelectListItem>)ViewData["Subjects"], "Seleccionar", new { @class = "form-control" })
+                        @Html.DropDownListFor(m => m.Code, (IEnumerable<SelectListItem>)ViewData["Subjects"], "Select", new { @class = "form-control select2"} )
                     </div>
 
                     <div class="mb-2">
                         <label class="form-label">Credits</label>
-                        <input type="number" class="form-control form-control-sm" id="Subject_Credits" />
+                        <input type="number" class="form-control form-control-sm" id="Subject_Credits" disabled/>
                     </div>
 
                     <button type="submit" class="btn btn-success btn-sm">Save Changes </button>
@@ -46,7 +56,6 @@
     <script>
         $(document).ready(function () {
             $('.select2').select2();
-
             var subjects = @Html.Raw(Json.Serialize(ViewData["Subjects1"]));
             var $subjectDropdown = $('#Code');
             var $creditsInput = $('#Subject_Credits');
@@ -54,7 +63,7 @@
             $subjectDropdown.change(function () {
                 var selectedId = $(this).val();
 
-                if (selectedId && selectedId !== "Seleccionar") {
+                if (selectedId && selectedId !== "Select") {
                     var selectedSubject = subjects.find(s => s.code.toString() === selectedId);
 
                     if (selectedSubject) {

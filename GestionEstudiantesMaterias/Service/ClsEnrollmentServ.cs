@@ -10,15 +10,21 @@ namespace GestionEstudiantesMaterias.Service
 {
     public class ClsEnrollmentServ : IEnrollmentService<EnrollmentDto, int>
     {
+        #region Attributes
         private readonly IUseCaseEnrollment<EnrollmentModel, int> useCaseBase;
         private ExceptionConfig exception = new ExceptionConfig();
         private readonly IMapper _mapper;
+        #endregion
+
+        #region Constructors
         public ClsEnrollmentServ(IUseCaseEnrollment<EnrollmentModel, int> _useCaseBase, IMapper mapper)
         {
             useCaseBase = _useCaseBase;
             _mapper = mapper;
         }
+        #endregion
 
+        #region Methods
         public bool Delete(int entityID)
         {
             try
@@ -28,33 +34,20 @@ namespace GestionEstudiantesMaterias.Service
             }
             catch (Exception ex)
             {
-                throw exception.Error(ex, ErrorStatus.Delete.GetEnumDescription());
+                throw new Exception(exception.Error(ex, ErrorStatus.Delete.GetEnumDescription()));
             }
         }
 
-        public List<EnrollmentDto> GetAll()
+        public List<EnrollmentDto> GetAll(string Document)
         {
             try
             {
-                List<EnrollmentDto> enrollments = _mapper.Map<List<EnrollmentDto>>(useCaseBase.GetAll());
+                List<EnrollmentDto> enrollments = _mapper.Map<List<EnrollmentDto>>(useCaseBase.GetAll(Document));
                 return enrollments;
             }
             catch (Exception ex)
             {
-                throw exception.Error(ex, ErrorStatus.Retrieve.GetEnumDescription());
-            }
-        }
-
-        public EnrollmentDto GetByID(int entityID)
-        {
-            try
-            {
-                EnrollmentDto enrollment = _mapper.Map<EnrollmentDto>(useCaseBase.GetAll());
-                return enrollment;
-            }
-            catch (Exception ex)
-            {
-                throw exception.Error(ex, ErrorStatus.Retrieve.GetEnumDescription());
+                throw new Exception(exception.Error(ex, ErrorStatus.Retrieve.GetEnumDescription()));
             }
         }
 
@@ -68,8 +61,9 @@ namespace GestionEstudiantesMaterias.Service
             catch (Exception ex)
             {
 
-                throw exception.Error(ex, ErrorStatus.Insert.GetEnumDescription());
+                throw new Exception(exception.Error(ex, ErrorStatus.Insert.GetEnumDescription()));
             }
-        }
+        } 
+        #endregion
     }
 }

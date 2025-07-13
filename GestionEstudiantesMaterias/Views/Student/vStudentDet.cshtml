@@ -19,14 +19,21 @@
 
     });
 
-
-
 </script>
 
 <div class="row">
+    @if (TempData["Error"] != null)
+    {
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        @Html.Raw(TempData["Error"])
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    }
+    <br />   
     <div class="col-1">
         <a asp-action="vStudentIni" asp-controller="Student" class="btn btn-warning btn-sm">Go Back</a>
     </div>
+    
 </div>
 <br />
 <div class="row">
@@ -42,17 +49,17 @@
 
                     <div class="mb-2">
                         <label class="form-label">Document</label>
-                        <input type="text" class="form-control form-control-sm" asp-for="Document" />
+                        <input type="text" class="form-control form-control-sm" asp-for="Document" required />
                     </div>
 
                     <div class="mb-2">
                         <label class="form-label">Name</label>
-                        <input type="text" class="form-control form-control-sm" asp-for="Name" />
+                        <input type="text" class="form-control form-control-sm" asp-for="Name" required />
                     </div>
 
                     <div class="mb-2">
                         <label class="form-label">Email</label>
-                        <input type="text" class="form-control form-control-sm" asp-for="Email" />
+                        <input type="email" class="form-control form-control-sm" asp-for="Email" required />
                     </div>
 
                     <button type="submit" class="btn btn-success btn-sm">Save Changes</button>
@@ -66,7 +73,7 @@
                 Subjects
             </div>
             <div class="card-body">
-                <a asp-action="vEnrollmentDet" asp-controller="Enrollment" class="btn btn-success btn-sm">New Enrollment</a>
+                <a asp-action="vEnrollmentDet" asp-controller="Enrollment" asp-route-Document="@Model.Document" class="btn btn-success btn-sm">New Enrollment</a>
                 <hr />
                 <table class="table">
                     <thead>
@@ -82,7 +89,7 @@
                                 <td>@item.Subject.Name</td>
                                 <td>@item.Subject.Credits</td>
                                 <td>
-                                    <a asp-action="Delete" asp-controller="Enrollment" asp-route-IdEnrollment="@item.IdEnrollment" class="btn btn-danger btn-sm">Eliminar</a>
+                                    <a asp-action="Delete" asp-controller="Enrollment" asp-route-IdEnrollment="@item.IdEnrollment" asp-route-Document="@item.Document" class="btn btn-danger btn-sm">Delete</a>
                                 </td>
                             </tr>
                         }
@@ -100,5 +107,6 @@
         $(document).ready(function () {
             $('.select2').select2();
         });
+
     </script>
 }

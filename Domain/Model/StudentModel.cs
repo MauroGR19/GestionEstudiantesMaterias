@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Domain.Model
+﻿namespace Domain.Model
 {
     public class StudentModel
     {
+        #region Properties
         public string Document { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
@@ -18,6 +12,7 @@ namespace Domain.Model
             Document = string.Empty;
             Name = string.Empty;
             Email = string.Empty;
-        }
+        } 
+        #endregion
     }
 }

@@ -1,21 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
+﻿using System.ComponentModel.DataAnnotations;
 using System.Security.Authentication;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Domain.Master
 {
     public class ExceptionConfig
     {
-        public Exception Error(Exception ex, string _strMessage)
+        #region Methods
+        public string Error(Exception ex, string _strMessage)
         {
             string strMessage = _strMessage;
 
             try
             {
+                throw ex;
             }
             catch (ArgumentNullException)
             {
@@ -48,8 +45,9 @@ namespace Domain.Master
 
             strMessage += ", Error details: " + ex.Message;
 
-            throw new Exception(strMessage);
+            return strMessage;
 
-        }
+        } 
+        #endregion
     }
 }

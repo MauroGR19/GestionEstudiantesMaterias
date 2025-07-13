@@ -1,29 +1,27 @@
 ﻿using AutoMapper;
 using Data.Contex;
 using Data.Entity;
-using Domain.Interface;
 using Domain.Interface.Repository;
 using Domain.Model;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Data.Operation
 {
     public class StudentOpe : IRepoBase<StudentModel, string>
     {
+        #region Attributes
         private StudentSubjectContex db;
         private readonly IMapper _mapper;
+        #endregion
 
+        #region Constructors
         public StudentOpe(StudentSubjectContex _db, IMapper mapper)
         {
             db = _db;
             _mapper = mapper;
         }
+        #endregion
 
+        #region Methods
         public bool Delete(string entityID)
         {
             var selecc = db.student.Where(row => row.Document == entityID).FirstOrDefault();
@@ -33,8 +31,8 @@ namespace Data.Operation
                 db.student.Remove(selecc);
                 return true;
             }
-            else  
-                return false; 
+            else
+                return false;
         }
 
         public List<StudentModel> GetAll()
@@ -72,10 +70,11 @@ namespace Data.Operation
                 db.Entry(selecc).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                 return true;
             }
-            else 
+            else
                 return false;
-        }
+        } 
+        #endregion
 
     }
-    
+
 }

@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Reflection.Metadata;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Domain.Model
+﻿namespace Domain.Model
 {
     public class SubjectModel
     {
+        #region Properties
         public int Code { get; set; }
         public string Name { get; set; }
         public int Credits { get; set; }
@@ -19,6 +12,7 @@ namespace Domain.Model
             Code = 0;
             Name = string.Empty;
             Credits = 0;
-        }
+        } 
+        #endregion
     }
 }
